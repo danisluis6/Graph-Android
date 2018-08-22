@@ -3,6 +3,7 @@ package org.giwi.networkgraph;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import org.giwi.networkgraph.beans.Vertex;
 import org.giwi.networkgraph.graph.GraphSurfaceView;
