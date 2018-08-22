@@ -4,6 +4,8 @@
       <root url="jar://$PROJECT_DIR$/app/libs/Config.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/app/libs/Config.jar!/src" />
+    </SOURCES>
   </library>
 </component>

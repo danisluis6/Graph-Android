@@ -1,15 +1,15 @@
 package org.giwi.networkgraph;
 
-import net.xqhs.graphs.graph.Node;
-import net.xqhs.graphs.graph.SimpleEdge;
-import net.xqhs.graphs.graph.SimpleNode;
-
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
-import org.giwi.networkgraph.beans.NetworkGraph;
 import org.giwi.networkgraph.beans.Vertex;
+import org.giwi.networkgraph.graph.GraphSurfaceView;
+import org.giwi.networkgraph.graph.edge.SimpleEdge;
+import org.giwi.networkgraph.graph.network.NetworkGraph;
+import org.giwi.networkgraph.graph.node.Node;
+import org.giwi.networkgraph.graph.node.SimpleNode;
 
 
 /**

@@ -1,6 +1,4 @@
-package org.giwi.networkgraph;
-
-import net.xqhs.graphs.graph.Edge;
+package org.giwi.networkgraph.graph;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -21,16 +19,15 @@ import android.view.ScaleGestureDetector;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import org.giwi.networkgraph.R;
 import org.giwi.networkgraph.beans.ArcUtils;
 import org.giwi.networkgraph.beans.Dimension;
-import org.giwi.networkgraph.beans.NetworkGraph;
 import org.giwi.networkgraph.beans.Point2D;
 import org.giwi.networkgraph.beans.Vertex;
-import org.giwi.networkgraph.layout.FRLayout;
+import org.giwi.networkgraph.graph.edge.Edge;
+import org.giwi.networkgraph.graph.network.NetworkGraph;
+import org.giwi.networkgraph.graph.view.FRLayout;
 
-/**
- * The type NetworkGraph surface view.
- */
 public class GraphSurfaceView extends SurfaceView {
 
     private ScaleGestureDetector mScaleDetector;
@@ -39,47 +36,23 @@ public class GraphSurfaceView extends SurfaceView {
 
     private float mScaleFactor = 1.f;
 
-    /**
-     * Instantiates a new NetworkGraph surface view.
-     *
-     * @param context the context
-     */
     public GraphSurfaceView(Context context) {
         super(context);
         mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
     }
 
-    /**
-     * Instantiates a new Graph surface view.
-     *
-     * @param context the context
-     * @param attrs   the attrs
-     */
     public GraphSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
         attributes = getContext().obtainStyledAttributes(attrs, R.styleable.GraphSurfaceView);
         mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
     }
 
-    /**
-     * Instantiates a new Graph surface view.
-     *
-     * @param context  the context
-     * @param attrs    the attrs
-     * @param defStyle the def style
-     */
     public GraphSurfaceView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         attributes = getContext().obtainStyledAttributes(attrs, R.styleable.GraphSurfaceView);
         mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
     }
 
-
-    /**
-     * Init.
-     *
-     * @param graph the graph
-     */
     public void init(final NetworkGraph graph) {
         setZOrderOnTop(true);
         getHolder().setFormat(PixelFormat.TRANSLUCENT);
@@ -94,14 +67,10 @@ public class GraphSurfaceView extends SurfaceView {
 
             @Override
             public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-                // TODO Auto-generated method stub
-
             }
 
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
-                // TODO Auto-generated method stub
-
             }
         });
     }
@@ -180,38 +149,18 @@ public class GraphSurfaceView extends SurfaceView {
         return output;
     }
 
-    /**
-     * On touch event.
-     *
-     * @param ev the ev
-     * @return the boolean
-     */
     @Override
     public boolean onTouchEvent(@NonNull MotionEvent ev) {
         mScaleDetector.onTouchEvent(ev);
         return true;
     }
 
-    /**
-     * Gets scale factor.
-     *
-     * @return the scale factor
-     */
     public float getScaleFactor() {
         return mScaleFactor;
     }
 
-    /**
-     * The type Scale listener.
-     */
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
 
-        /**
-         * On scale.
-         *
-         * @param detector the detector
-         * @return the boolean
-         */
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
             mScaleFactor *= detector.getScaleFactor();

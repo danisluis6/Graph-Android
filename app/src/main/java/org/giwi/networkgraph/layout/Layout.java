@@ -1,11 +1,10 @@
 package org.giwi.networkgraph.layout;
 
-import net.xqhs.graphs.graph.Node;
-
 import org.apache.commons.collections4.Transformer;
 import org.giwi.networkgraph.beans.Dimension;
-import org.giwi.networkgraph.beans.NetworkGraph;
 import org.giwi.networkgraph.beans.Point2D;
+import org.giwi.networkgraph.graph.network.NetworkGraph;
+import org.giwi.networkgraph.graph.node.Node;
 
 
 /**

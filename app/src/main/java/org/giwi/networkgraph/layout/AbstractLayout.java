@@ -2,14 +2,14 @@ package org.giwi.networkgraph.layout;
 
 import android.util.Log;
 
-import net.xqhs.graphs.graph.Node;
 
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.functors.ChainedTransformer;
 import org.apache.commons.collections4.map.LazyMap;
 import org.giwi.networkgraph.beans.Dimension;
-import org.giwi.networkgraph.beans.NetworkGraph;
 import org.giwi.networkgraph.beans.Point2D;
+import org.giwi.networkgraph.graph.network.NetworkGraph;
+import org.giwi.networkgraph.graph.node.Node;
 
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
@@ -20,7 +20,7 @@ import java.util.Set;
 /**
  * The type Abstract layout.
  */
-abstract class AbstractLayout implements Layout {
+public abstract class AbstractLayout implements Layout {
 
     private Set<Node> dontmove = new HashSet<>();
 
@@ -28,7 +28,7 @@ abstract class AbstractLayout implements Layout {
 
     private NetworkGraph graph;
 
-    boolean initialized;
+    public boolean initialized;
 
     private Map<Node, Point2D> locations
             = LazyMap.lazyMap(new HashMap<Node, Point2D>(), new Transformer<Node, Point2D>() {
@@ -42,7 +42,7 @@ abstract class AbstractLayout implements Layout {
      *
      * @param graph the graph for which the layout algorithm is to be created.
      */
-    AbstractLayout(NetworkGraph graph) {
+    protected AbstractLayout(NetworkGraph graph) {
         if (graph == null) {
             throw new IllegalArgumentException("NetworkGraph must be non-null");
         }
@@ -83,7 +83,7 @@ abstract class AbstractLayout implements Layout {
      * @param initializer the initializer
      * @param size        the size
      */
-    AbstractLayout(NetworkGraph graph, Transformer<Node, Point2D> initializer, Dimension size) {
+    protected AbstractLayout(NetworkGraph graph, Transformer<Node, Point2D> initializer, Dimension size) {
         this.graph = graph;
         this.locations = LazyMap.lazyMap(new HashMap<Node, Point2D>(), initializer);
         this.size = size;

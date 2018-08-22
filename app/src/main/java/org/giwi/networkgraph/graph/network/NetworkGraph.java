@@ -1,13 +1,10 @@
-package org.giwi.networkgraph.beans;
+package org.giwi.networkgraph.graph.network;
 
-import org.giwi.networkgraph.graph.network.SimpleGraph;
+import org.giwi.networkgraph.beans.Vertex;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * The type Network graph.
- */
 public class NetworkGraph extends SimpleGraph {
 
     private List<Vertex> vertex = new ArrayList<>();

@@ -1,4 +1,4 @@
-package org.giwi.networkgraph.layout;
+package org.giwi.networkgraph.graph.view;
 
 import android.util.Log;
 
@@ -11,14 +11,12 @@ import org.giwi.networkgraph.beans.RandomLocationTransformer;
 import org.giwi.networkgraph.graph.edge.Edge;
 import org.giwi.networkgraph.graph.network.NetworkGraph;
 import org.giwi.networkgraph.graph.node.Node;
+import org.giwi.networkgraph.layout.AbstractLayout;
 
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * The type FR layout.
- */
 public class FRLayout extends AbstractLayout {
 
     private double temperature;
@@ -27,7 +25,7 @@ public class FRLayout extends AbstractLayout {
 
     private int mMaxIterations = 700;
 
-    private Map<Node, FRVertexData> frVertexData = LazyMap.lazyMap(new HashMap<Node, FRVertexData>(), new Factory<FRVertexData>() {
+    private Map<Node, FRLayout.FRVertexData> frVertexData = LazyMap.lazyMap(new HashMap<Node, FRLayout.FRVertexData>(), new Factory<FRVertexData>() {
         public FRVertexData create() {
             return new FRVertexData();
         }
@@ -43,32 +41,16 @@ public class FRLayout extends AbstractLayout {
 
     private double max_dimension;
 
-    /**
-     * Creates an instance for the specified graph.
-     *
-     * @param g the g
-     */
     public FRLayout(NetworkGraph g) {
         super(g);
     }
 
-    /**
-     * Creates an instance of size {@code d} for the specified graph.
-     *
-     * @param g the g
-     * @param d the d
-     */
     public FRLayout(NetworkGraph g, Dimension d) {
         super(g, new RandomLocationTransformer<Node>(d), d);
         initialize();
         max_dimension = Math.max(d.getHeight(), d.getWidth());
     }
 
-    /**
-     * Sets size.
-     *
-     * @param size the size
-     */
     @Override
     public void setSize(Dimension size) {
         if (!initialized) {
@@ -78,51 +60,27 @@ public class FRLayout extends AbstractLayout {
         max_dimension = Math.max(size.getHeight(), size.getWidth());
     }
 
-    /**
-     * Sets the attraction multiplier.
-     *
-     * @param attraction the attraction
-     */
     public void setAttractionMultiplier(double attraction) {
         this.attraction_multiplier = attraction;
     }
 
-    /**
-     * Sets the repulsion multiplier.
-     *
-     * @param repulsion the repulsion
-     */
     public void setRepulsionMultiplier(double repulsion) {
         this.repulsion_multiplier = repulsion;
     }
 
-    /**
-     * Reset void.
-     */
     public void reset() {
         doInit();
     }
 
-    /**
-     * Initialize void.
-     */
     public void initialize() {
         doInit();
     }
 
-    /**
-     * Sets graph.
-     *
-     * @param graph the graph
-     */
     @Override
     public void setGraph(final NetworkGraph graph) {
         super.setGraph(graph);
     }
 
-    /**
-     * Do init.
-     */
     private void doInit() {
         NetworkGraph graph = getGraph();
         Dimension d = getSize();
@@ -135,15 +93,8 @@ public class FRLayout extends AbstractLayout {
         }
     }
 
-    /**
-     * The EPSILON.
-     */
     private double EPSILON = 0.000001D;
 
-    /**
-     * Moves the iteration forward one notch, calculation attraction and
-     * repulsion between vertices and edges and cooling the temperature.
-     */
     public synchronized void step() {
         currentIteration++;
         while (true) {
@@ -153,7 +104,7 @@ public class FRLayout extends AbstractLayout {
                 }
                 break;
             } catch (ConcurrentModificationException cme) {
-                Log.e(FRLayout.class.getName(), cme.getMessage());
+                Log.e(org.giwi.networkgraph.layout.FRLayout.class.getName(), cme.getMessage());
             }
         }
         while (true) {
@@ -164,7 +115,7 @@ public class FRLayout extends AbstractLayout {
                 }
                 break;
             } catch (ConcurrentModificationException cme) {
-                Log.e(FRLayout.class.getName(), cme.getMessage());
+                Log.e(org.giwi.networkgraph.layout.FRLayout.class.getName(), cme.getMessage());
             }
         }
         while (true) {
@@ -177,19 +128,14 @@ public class FRLayout extends AbstractLayout {
                 }
                 break;
             } catch (ConcurrentModificationException cme) {
-                Log.e(FRLayout.class.getName(), cme.getMessage());
+                Log.e(org.giwi.networkgraph.layout.FRLayout.class.getName(), cme.getMessage());
             }
         }
         cool();
     }
 
-    /**
-     * Calc positions.
-     *
-     * @param v the v
-     */
     private synchronized void calcPositions(Node v) {
-        FRVertexData fvd = getFRData(v);
+        FRLayout.FRVertexData fvd = getFRData(v);
         if (fvd == null) {
             return;
         }
@@ -222,11 +168,6 @@ public class FRLayout extends AbstractLayout {
         xyd.setLocation(newXPos, newYPos);
     }
 
-    /**
-     * Calc attraction.
-     *
-     * @param e the e
-     */
     private void calcAttraction(Edge e) {
         Node v1 = e.getFrom();
         Node v2 = e.getTo();
@@ -256,22 +197,17 @@ public class FRLayout extends AbstractLayout {
         double dx = (xDelta / deltaLength) * force;
         double dy = (yDelta / deltaLength) * force;
         if (!v1_locked) {
-            FRVertexData fvd1 = getFRData(v1);
+            FRLayout.FRVertexData fvd1 = getFRData(v1);
             fvd1.offset(-dx, -dy);
         }
         if (!v2_locked) {
-            FRVertexData fvd2 = getFRData(v2);
+            FRLayout.FRVertexData fvd2 = getFRData(v2);
             fvd2.offset(dx, dy);
         }
     }
 
-    /**
-     * Calc repulsion.
-     *
-     * @param v1 the v 1
-     */
     private void calcRepulsion(Node v1) {
-        FRVertexData fvd1 = getFRData(v1);
+        FRLayout.FRVertexData fvd1 = getFRData(v1);
         if (fvd1 == null) {
             return;
         }
@@ -304,72 +240,33 @@ public class FRLayout extends AbstractLayout {
         }
     }
 
-    /**
-     * Cool void.
-     */
     private void cool() {
         temperature *= (1.0 - currentIteration / (double) mMaxIterations);
     }
 
-    /**
-     * Sets the maximum number of iterations.
-     *
-     * @param maxIterations the max iterations
-     */
     public void setMaxIterations(int maxIterations) {
         mMaxIterations = maxIterations;
     }
 
-    /**
-     * Gets fR data.
-     *
-     * @param v the v
-     * @return the fR data
-     */
-    private FRVertexData getFRData(Node v) {
+    private FRLayout.FRVertexData getFRData(Node v) {
         return frVertexData.get(v);
     }
 
-    /**
-     * This one is an incremental visualization.
-     *
-     * @return the boolean
-     */
     public boolean isIncremental() {
         return true;
     }
 
-    /**
-     * Returns true once the current iteration has passed the maximum count,
-     * <tt>MAX_ITERATIONS</tt>.
-     *
-     * @return the boolean
-     */
     public boolean done() {
         return currentIteration > mMaxIterations || temperature < 1.0 / max_dimension;
     }
 
-    /**
-     * The type FR vertex data.
-     */
     private static class FRVertexData extends Point2D {
 
-        /**
-         * Offset void.
-         *
-         * @param x the x
-         * @param y the y
-         */
         void offset(double x, double y) {
             this.x += x;
             this.y += y;
         }
 
-        /**
-         * Norm double.
-         *
-         * @return the double
-         */
         double norm() {
             return Math.sqrt(x * x + y * y);
         }

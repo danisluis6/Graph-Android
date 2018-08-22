@@ -2,7 +2,7 @@ package org.giwi.networkgraph.beans;
 
 import android.graphics.drawable.Drawable;
 
-import net.xqhs.graphs.graph.Node;
+import org.giwi.networkgraph.graph.node.Node;
 
 /**
  * The type Vertex.

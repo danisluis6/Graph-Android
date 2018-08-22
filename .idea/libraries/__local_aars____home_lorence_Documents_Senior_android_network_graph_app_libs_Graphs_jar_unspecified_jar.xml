@@ -4,6 +4,8 @@
       <root url="jar://$PROJECT_DIR$/app/libs/Graphs.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/app/libs/Graphs.jar!/src" />
+    </SOURCES>
   </library>
 </component>
