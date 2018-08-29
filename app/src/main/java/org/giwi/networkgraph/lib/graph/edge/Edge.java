@@ -7,7 +7,7 @@ public interface Edge extends GraphComponent {
     /**
      * If in need of a readable rendition of the edge's features, use the <code>toString</code> functions.
      *
-     * @return the label of the edge
+     * @return the nickName of the edge
      */
     public String getLabel();
 
@@ -30,14 +30,14 @@ public interface Edge extends GraphComponent {
     String toString();
 
     /**
-     * Constructs a short representation of the edge, including only information about label.
+     * Constructs a short representation of the edge, including only information about nickName.
      *
      * @return a short {@link String} representation of the edge
      */
     String toStringShort();
 
     /**
-     * Constructs a short representation of the edge, including only information about label and direction. The
+     * Constructs a short representation of the edge, including only information about nickName and direction. The
      * direction depends on the general direction of the representation.
      *
      * @param isBackward

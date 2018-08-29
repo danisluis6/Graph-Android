@@ -2,5 +2,5 @@ package org.giwi.networkgraph.lib.graph.node;
 
 public interface Node extends GraphComponent
 {
-    public String getLabel();
+    public String getNickName();
 }

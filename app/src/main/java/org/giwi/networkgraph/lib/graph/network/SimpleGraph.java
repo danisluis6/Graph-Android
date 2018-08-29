@@ -276,7 +276,7 @@ public class SimpleGraph extends Unit implements Graph {
     public Collection<Node> getNodesNamed(String name) {
         Collection<Node> ret = new HashSet<Node>();
         for (Node node : nodes.keySet())
-            if (node.getLabel().equals(name))
+            if (node.getNickName().equals(name))
                 ret.add(node);
         return ret;
     }
@@ -361,14 +361,14 @@ public class SimpleGraph extends Unit implements Graph {
             ret += " -> ";
             ret += "\"" + toNode + "\"";
             if (edge.getLabel() != null)
-                ret += " [" + "label=\"" + edge.getLabel() + "\"]";
+                ret += " [" + "nickName=\"" + edge.getLabel() + "\"]";
             ret += ";\n";
         }
         for (Node node : nodes.keySet()) {
             if (node instanceof NodeP && ((NodeP) node).isGeneric())
-                ret += "\t\"" + node.toString() + "\" [label=\"" + node.getLabel() + "\"];\n";
-            // if(node.getLabel().contains(" "))
-            // ret += "\t" + node.getLabel().replace(' ', '_') + " [label=\"" + node.getLabel() + "\"];\n";
+                ret += "\t\"" + node.toString() + "\" [nickName=\"" + node.getNickName() + "\"];\n";
+            // if(node.getNickName().contains(" "))
+            // ret += "\t" + node.getNickName().replace(' ', '_') + " [nickName=\"" + node.getNickName() + "\"];\n";
         }
         ret += "}";
         return ret;
@@ -385,8 +385,8 @@ public class SimpleGraph extends Unit implements Graph {
      * <li>a unidirectional edge ends with dash-greater or just greater (-> or >)
      * <li>an unlabeled unidirectional edge is either dash-greater or just greater (-> or >)
      * <li>all unidirectional edges are to the right (source -> destination)
-     * <li>bi-directional edges with no label should be one or two dashes (- or --)
-     * <li>labeled bi-directional edges should begin and end with a dash ( - label here - )
+     * <li>bi-directional edges with no nickName should be one or two dashes (- or --)
+     * <li>labeled bi-directional edges should begin and end with a dash ( - nickName here - )
      * <li>all spaces between elements are accepted and ignored
      * </ul>
      * The newly read edges and nodes are added on the existing structure, if any.
