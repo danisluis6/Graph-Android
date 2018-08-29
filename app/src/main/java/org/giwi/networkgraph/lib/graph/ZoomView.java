@@ -158,29 +158,7 @@ public class ZoomView extends SurfaceView {
         this.setTranslationY(dy);
     }
 
-    public void initialize(final NetworkGraph graph) {
-        setZOrderOnTop(true);
-        getHolder().setFormat(PixelFormat.TRANSLUCENT);
-        getHolder().addCallback(new SurfaceHolder.Callback() {
-            @Override
-            public void surfaceCreated(SurfaceHolder holder) {
-                Canvas canvas = holder.lockCanvas(null);
-                canvas.drawARGB(0, 225, 225, 255);
-                drawGraph(canvas, graph);
-                holder.unlockCanvasAndPost(canvas);
-            }
-
-            @Override
-            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-            }
-
-            @Override
-            public void surfaceDestroyed(SurfaceHolder holder) {
-            }
-        });
-    }
-
-    private void drawGraph(final Canvas canvas, final NetworkGraph graph) {
+    public void drawGraph(final Canvas canvas, final NetworkGraph graph) {
         Paint paint = new Paint();
         Paint whitePaint = new Paint();
         paint.setAntiAlias(true);
