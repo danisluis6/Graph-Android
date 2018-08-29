@@ -53,9 +53,9 @@ public class HomeActivity extends BaseActivity implements HomeView, SurfaceHolde
     protected void initViews() {
         mZoomView.getHolder().addCallback(this);
 
-        Node v1 = new SimpleNode("Bà ngoại");
+        /*Node v1 = new SimpleNode("Bà ngoại");
         Vertex vertex1 = new Vertex(v1, ContextCompat.getDrawable(mContext, R.drawable.avatar));
-        mNetworkGraph.getVertex().add(vertex1);
+        mNetworkGraph.getVertex().add(vertex1);*/
 
 
         mZoomView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
@@ -63,16 +63,16 @@ public class HomeActivity extends BaseActivity implements HomeView, SurfaceHolde
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        Canvas canvas = holder.lockCanvas(null);
+        /*Canvas canvas = holder.lockCanvas(null);
         canvas.drawARGB(0, 225, 225, 255);
         mZoomView.drawGraph(canvas, mNetworkGraph);
-        holder.unlockCanvasAndPost(canvas);
+        holder.unlockCanvasAndPost(canvas);*/
 
-        /*mediaPlayer = MediaPlayer.create(getApplicationContext(), Uri.parse(path), holder);
+        mediaPlayer = MediaPlayer.create(getApplicationContext(), Uri.parse(path), holder);
         mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener(){
             public void onPrepared(MediaPlayer arg0) {
                 mediaPlayer.start();
-            }} );*/
+            }} );
     }
 
     @Override

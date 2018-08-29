@@ -16,9 +16,9 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
-import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import org.giwi.networkgraph.R;
 import org.giwi.networkgraph.lib.beans.ArcUtils;
@@ -41,10 +41,10 @@ public class ZoomView extends SurfaceView {
 
     private Mode mode = Mode.NONE;
 
-    private static final float minScale = 1.0f;
-    private static final float maxScale = 5.0f;
+    private static final float minScale = 1f;
+    private static final float maxScale = 5f;
 
-    private float scale = 1.0f;
+    private float scale = 1f;
 
     private float startX = 0.0f;
     private float startY = 0.0f;
@@ -56,25 +56,28 @@ public class ZoomView extends SurfaceView {
 
     private ScaleGestureDetector SGD;
     private float lastScaleFactor = 1.0f;
+    private Context context;
 
     public ZoomView(Context context) {
         super(context);
-        init(context);
+        init();
     }
 
     public ZoomView(Context context, AttributeSet attrs) {
         super(context, attrs);
         attributes = getContext().obtainStyledAttributes(attrs, R.styleable.ZoomView);
-        init(context);
+        this.context  = context;
+        init();
     }
 
     public ZoomView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         attributes = getContext().obtainStyledAttributes(attrs, R.styleable.ZoomView);
-        init(context);
+        this.context = context;
+        init();
     }
 
-    private void init(Context context) {
+    private void init() {
         setOnTouchListener(new MyTouchListeners());
         SGD = new ScaleGestureDetector(context, new ScaleListener());
     }
@@ -87,6 +90,7 @@ public class ZoomView extends SurfaceView {
 
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
+            SGD.onTouchEvent(motionEvent);
             switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
                 case MotionEvent.ACTION_DOWN:
                     if (scale > minScale) {
@@ -112,15 +116,16 @@ public class ZoomView extends SurfaceView {
                     prevDx = dx;
                     prevDy = dy;
                     break;
+                default:
+                    return true;
             }
-            SGD.onTouchEvent(motionEvent);
 
             if ((mode == Mode.DRAG && scale >= minScale) || mode == Mode.ZOOM) {
-                getParent().requestDisallowInterceptTouchEvent(true);
-                float maxDx = getWidth() * scale;
-                float maxDy = getHeight() * scale;
-                dx = Math.min(Math.max(dx, -maxDx), 0);
-                dy = Math.min(Math.max(dy, -maxDy), 0);
+//                getParent().requestDisallowInterceptTouchEvent(true);
+//                float maxDx = getWidth() * scale;
+//                float maxDy = getHeight() * scale;
+//                dx = Math.min(Math.max(dx, -maxDx), 0);
+//                dy = Math.min(Math.max(dy, -maxDy), 0);
                 applyScaleAndTranslation();
             }
 
@@ -128,23 +133,34 @@ public class ZoomView extends SurfaceView {
         }
     }
 
+//    private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
+//        @Override
+//        public boolean onScale(ScaleGestureDetector scaleDetector) {
+//            Log.i("TAG", "scaleDetector: "+scaleDetector.getScaleFactor());
+//            float scaleFactor = scaleDetector.getScaleFactor();
+//            if (lastScaleFactor == 0 || (Math.signum(scaleFactor) == Math.signum(lastScaleFactor))) {
+//                float prevScale = scale;
+//                scale *= scaleFactor;
+//                scale = Math.max(minScale, Math.min(scale, maxScale));
+//                lastScaleFactor = scaleFactor;
+//                float adjustedScaleFactor = scale / prevScale;
+//                float focusX = scaleDetector.getFocusX();
+//                float focusY = scaleDetector.getFocusY();
+//                dx += (dx - focusX) * (adjustedScaleFactor - 1.0f);
+//                dy += (dy - focusY) * (adjustedScaleFactor - 1.0f);
+//            } else {
+//                lastScaleFactor = 0;
+//            }
+//            return true;
+//        }
+//    }
+
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
         @Override
-        public boolean onScale(ScaleGestureDetector scaleDetector) {
-            float scaleFactor = scaleDetector.getScaleFactor();
-            if (lastScaleFactor == 0 || (Math.signum(scaleFactor) == Math.signum(lastScaleFactor))) {
-                float prevScale = scale;
-                scale *= scaleFactor;
-                scale = Math.max(minScale, Math.min(scale, maxScale));
-                lastScaleFactor = scaleFactor;
-                float adjustedScaleFactor = scale / prevScale;
-                float focusX = scaleDetector.getFocusX();
-                float focusY = scaleDetector.getFocusY();
-                dx += (dx - focusX) * (adjustedScaleFactor - 1.0f);
-                dy += (dy - focusY) * (adjustedScaleFactor - 1.0f);
-            } else {
-                lastScaleFactor = 0;
-            }
+        public boolean onScale(ScaleGestureDetector detector) {
+            Log.i("TAG", "scaleDetector: "+detector.getScaleFactor());
+            scale *= detector.getScaleFactor();
+            scale = Math.max(minScale, Math.min(scale, maxScale));
             return true;
         }
     }
