@@ -6,16 +6,16 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PixelFormat;
 import android.graphics.PointF;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.Handler;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
+import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 
@@ -166,62 +166,85 @@ public class ZoomView extends SurfaceView {
         this.setTranslationY(dy);
     }
 
-    public void drawGraph(final Canvas canvas, final NetworkGraph graph) {
-        Paint paint = new Paint();
-        Paint whitePaint = new Paint();
+    public void init(final NetworkGraph graph, final double height, final double width) {
+        setZOrderMediaOverlay(true);
+        getHolder().setFormat(PixelFormat.RGBA_8888);
+        getHolder().addCallback(new SurfaceHolder.Callback() {
+            @Override
+            public void surfaceCreated(SurfaceHolder holder) {
+                Canvas canvas = holder.lockCanvas(null);
+                canvas.drawARGB(255, 255, 254, 244); // Get it here: https://color.adobe.com/create/color-wheel
+                drawGraph(canvas, graph, height, width);
+                holder.unlockCanvasAndPost(canvas);
+            }
+
+            @Override
+            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+            }
+
+            @Override
+            public void surfaceDestroyed(SurfaceHolder holder) {
+            }
+        });
+    }
+
+    private void drawGraph(final Canvas canvas, final NetworkGraph graph, double height, double width) {
+        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        Paint whitePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setAntiAlias(true);
         FRLayout layout = new FRLayout(graph, new Dimension(getWidth(), getHeight()));
 
         whitePaint.setColor(attributes.getColor(R.styleable.ZoomView_nodeBgColor, graph.getNodeBgColor()));
         whitePaint.setStyle(Paint.Style.STROKE);
-        whitePaint.setStrokeWidth(2f);
+        whitePaint.setStrokeWidth(4f);
 
-        paint.setTextAlign(Paint.Align.CENTER);
-        paint.setTextSize(20f);
-        paint.setColor(attributes.getColor(R.styleable.ZoomView_defaultColor, graph.getDefaultColor()));
+        Paint linePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        linePaint.setColor(Color.BLACK);
+        linePaint.setStyle(Paint.Style.STROKE);
+        linePaint.setStrokeWidth(2);
 
-        for (Edge edge : graph.getEdges()) {
-            Point2D p1 = layout.transform(edge.getFrom());
-            Point2D p2 = layout.transform(edge.getTo());
-            paint.setStrokeWidth(Float.valueOf(edge.getLabel()) + 1f);
-            paint.setColor(attributes.getColor(R.styleable.ZoomView_edgeColor, graph.getEdgeColor()));
-            Paint curve = new Paint();
-            curve.setAntiAlias(true);
-            curve.setStyle(Paint.Style.STROKE);
-            curve.setStrokeWidth(2);
-            curve.setColor(attributes.getColor(R.styleable.ZoomView_edgeColor, graph.getEdgeColor()));
-            PointF e1 = new PointF((float) p1.getX(), (float) p1.getY());
-            PointF e2 = new PointF((float) p2.getX(), (float) p2.getY());
-            ArcUtils.drawArc(e1, e2, 36f, canvas, curve, paint, whitePaint, Integer.parseInt(edge.getLabel()));
-        }
+        float x1 = (float) (width/2);
+        float y1 = 140;
+        float x2 = (float) (width/2);
+        float y2 = 220;
+        canvas.drawLine(x1, y1, x2, y2, linePaint);
+        canvas.drawLine((float) (width*0.25), 220, (float) (width*0.75f), 220, paint);
+        canvas.drawLine((float) (width*0.25), 220, (float) (width*0.25f), 300, paint);
+        canvas.drawLine((float) (width*0.75), 220, (float) (width*0.75f), 300, paint);
 
-        paint.setStyle(Paint.Style.FILL);
-        paint.setTextAlign(Paint.Align.CENTER);
-        paint.setTextSize(30f);
-        paint.setStrokeWidth(0f);
-        paint.setColor(attributes.getColor(R.styleable.ZoomView_nodeColor, graph.getNodeColor()));
 
-        Log.i("Vertex", "graph.getVertex(): "+graph.getVertex().size());
-        Vertex node = graph.getVertex().get(0);
-
-        Log.i("Vertex", "node.getNode()"+node.getNode());
-        Point2D position = layout.transform(node.getNode());
-        canvas.drawCircle((float) position.getX(), (float) position.getY(), 60, whitePaint);
-        Log.i("Vertex", "Position x: "+position.getX());
-        Log.i("Vertex", "Position y: "+position.getY());
-        if (node.getIcon() != null) {
-            Bitmap b = ((BitmapDrawable) node.getIcon()).getBitmap();
+        /*
+         * Vertex 1
+         */
+        double posX = width/2;
+        double posY = 70.0;
+        Vertex vertex1 = graph.getVertex().get(0);
+        Point2D position = layout.transform(vertex1.getNode());
+//        double posX = position.getX();
+//        double posY = position.getY();
+        canvas.drawCircle((float) posX, (float) posY, 72, whitePaint);
+        if (vertex1.getIcon() != null) {
+            Bitmap b = ((BitmapDrawable) vertex1.getIcon()).getBitmap();
             Bitmap bitmap = b.copy(Bitmap.Config.ARGB_8888, true);
-            Bitmap roundBitmap = getCroppedBitmap(bitmap, 75);
+            Bitmap roundBitmap = getCroppedBitmap(bitmap, 140);
             canvas.drawBitmap(roundBitmap,
-                    (float) position.getX() - 38f, (float) position.getY() - 38f, null);
+                    (float) posX - 70f, (float) posY - 70f, null);
         }
-        canvas.drawRect(
-                (float) position.getX() - 20,
-                (float) position.getY() + 50,
-                (float) position.getX() + 20, (float) position.getY() + 10, whitePaint);
-        canvas.drawText(node.getNode().getNickName(), (float) position.getX(),
-                (float) position.getY() + 40, paint);
+
+        /*
+         * Vertex 2
+         */
+        posX = width*0.25 - 72;
+        posY = 220.0 + 72;
+        Vertex vertex2 = graph.getVertex().get(1);
+        canvas.drawCircle((float) posX + 72, (float) posY + 72, 72, whitePaint);
+        if (vertex2.getIcon() != null) {
+            Bitmap b = ((BitmapDrawable) vertex2.getIcon()).getBitmap();
+            Bitmap bitmap = b.copy(Bitmap.Config.ARGB_8888, true);
+            Bitmap roundBitmap = getCroppedBitmap(bitmap, 140);
+            canvas.drawBitmap(roundBitmap,
+                    (float) posX, (float) posY, null);
+        }
     }
 
     private Bitmap getCroppedBitmap(Bitmap bmp, int radius) {
