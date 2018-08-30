@@ -6,19 +6,18 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.PixelFormat;
 import android.graphics.PointF;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.SurfaceView;
 import android.view.View;
-import android.widget.FrameLayout;
 
 import org.giwi.networkgraph.R;
 import org.giwi.networkgraph.lib.beans.ArcUtils;
@@ -54,9 +53,10 @@ public class ZoomView extends SurfaceView {
     private float prevDx = 0.0f;
     private float prevDy = 0.0f;
 
-    private ScaleGestureDetector SGD;
+    private ScaleGestureDetector mScaleDetector;
     private float lastScaleFactor = 1.0f;
     private Context context;
+    private boolean isSingleTouch;
 
     public ZoomView(Context context) {
         super(context);
@@ -79,7 +79,7 @@ public class ZoomView extends SurfaceView {
 
     private void init() {
         setOnTouchListener(new MyTouchListeners());
-        SGD = new ScaleGestureDetector(context, new ScaleListener());
+        mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
     }
 
     private class MyTouchListeners implements View.OnTouchListener {
@@ -90,7 +90,13 @@ public class ZoomView extends SurfaceView {
 
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
-            SGD.onTouchEvent(motionEvent);
+            if (motionEvent.getPointerCount() > 1) {
+                isSingleTouch = false;
+            } else {
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    isSingleTouch = true;
+                }
+            }
             switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
                 case MotionEvent.ACTION_DOWN:
                     if (scale > minScale) {
@@ -100,9 +106,11 @@ public class ZoomView extends SurfaceView {
                     }
                     break;
                 case MotionEvent.ACTION_MOVE:
-                    if (mode == Mode.DRAG) {
-                        dx = motionEvent.getX() - startX;
-                        dy = motionEvent.getY() - startY;
+                    if (isSingleTouch) {
+                        if (mode == Mode.DRAG) {
+                            dx = motionEvent.getX() - startX;
+                            dy = motionEvent.getY() - startY;
+                        }
                     }
                     break;
                 case MotionEvent.ACTION_POINTER_DOWN:
@@ -120,47 +128,35 @@ public class ZoomView extends SurfaceView {
                     return true;
             }
 
-            if ((mode == Mode.DRAG && scale >= minScale) || mode == Mode.ZOOM) {
-//                getParent().requestDisallowInterceptTouchEvent(true);
-//                float maxDx = getWidth() * scale;
-//                float maxDy = getHeight() * scale;
-//                dx = Math.min(Math.max(dx, -maxDx), 0);
-//                dy = Math.min(Math.max(dy, -maxDy), 0);
+            if (mode == Mode.DRAG && scale >= minScale && isSingleTouch && !mScaleDetector.isInProgress()) {
+                getParent().requestDisallowInterceptTouchEvent(true);
+                float maxDx = getWidth() * scale;
+                float maxDy = getHeight() * scale;
+                dx = Math.min(Math.max(dx, - maxDx), 0);
+                dy = Math.min(Math.max(dy, - maxDy), 0);
                 applyScaleAndTranslation();
             }
 
+            mScaleDetector.onTouchEvent(motionEvent);
             return true;
         }
     }
 
-//    private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
-//        @Override
-//        public boolean onScale(ScaleGestureDetector scaleDetector) {
-//            Log.i("TAG", "scaleDetector: "+scaleDetector.getScaleFactor());
-//            float scaleFactor = scaleDetector.getScaleFactor();
-//            if (lastScaleFactor == 0 || (Math.signum(scaleFactor) == Math.signum(lastScaleFactor))) {
-//                float prevScale = scale;
-//                scale *= scaleFactor;
-//                scale = Math.max(minScale, Math.min(scale, maxScale));
-//                lastScaleFactor = scaleFactor;
-//                float adjustedScaleFactor = scale / prevScale;
-//                float focusX = scaleDetector.getFocusX();
-//                float focusY = scaleDetector.getFocusY();
-//                dx += (dx - focusX) * (adjustedScaleFactor - 1.0f);
-//                dy += (dy - focusY) * (adjustedScaleFactor - 1.0f);
-//            } else {
-//                lastScaleFactor = 0;
-//            }
-//            return true;
-//        }
-//    }
-
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
         @Override
-        public boolean onScale(ScaleGestureDetector detector) {
-            Log.i("TAG", "scaleDetector: "+detector.getScaleFactor());
+        public boolean onScale(final ScaleGestureDetector detector) {
+            final float prevScale = scale;
             scale *= detector.getScaleFactor();
             scale = Math.max(minScale, Math.min(scale, maxScale));
+
+            float adjustedScaleFactor = scale / prevScale;
+            float focusX = detector.getFocusX();
+            float focusY = detector.getFocusY();
+            dx += (dx - focusX) * (adjustedScaleFactor - 1.0f);
+            dy += (dy - focusY) * (adjustedScaleFactor - 1.0f);
+
+            applyScaleAndTranslation();
+
             return true;
         }
     }
