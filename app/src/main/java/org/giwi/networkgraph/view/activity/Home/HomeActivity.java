@@ -33,9 +33,6 @@ public class HomeActivity extends BaseActivity implements HomeView, SurfaceHolde
     @Inject
     Context mContext;
 
-    private MediaPlayer mediaPlayer;
-    String path = "http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4";
-
     @Override
     public void distributedDaggerComponents() {
         Application.getInstance()
