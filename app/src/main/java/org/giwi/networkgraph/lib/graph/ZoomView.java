@@ -43,7 +43,7 @@ public class ZoomView extends SurfaceView {
     private static final float minScale = 1f;
     private static final float maxScale = 5f;
 
-    private float scale = 1f;
+    private float scale = 1.0f;
 
     private float startX = 0.0f;
     private float startY = 0.0f;
@@ -54,7 +54,6 @@ public class ZoomView extends SurfaceView {
     private float prevDy = 0.0f;
 
     private ScaleGestureDetector mScaleDetector;
-    private float lastScaleFactor = 1.0f;
     private Context context;
     private boolean isSingleTouch;
 
@@ -148,15 +147,12 @@ public class ZoomView extends SurfaceView {
             final float prevScale = scale;
             scale *= detector.getScaleFactor();
             scale = Math.max(minScale, Math.min(scale, maxScale));
-
             float adjustedScaleFactor = scale / prevScale;
             float focusX = detector.getFocusX();
             float focusY = detector.getFocusY();
             dx += (dx - focusX) * (adjustedScaleFactor - 1.0f);
             dy += (dy - focusY) * (adjustedScaleFactor - 1.0f);
-
             applyScaleAndTranslation();
-
             return true;
         }
     }
@@ -177,10 +173,8 @@ public class ZoomView extends SurfaceView {
         FRLayout layout = new FRLayout(graph, new Dimension(getWidth(), getHeight()));
 
         whitePaint.setColor(attributes.getColor(R.styleable.ZoomView_nodeBgColor, graph.getNodeBgColor()));
-        whitePaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        whitePaint.setStyle(Paint.Style.STROKE);
         whitePaint.setStrokeWidth(2f);
-        whitePaint.setShadowLayer(5, 0, 0, attributes.getColor(R.styleable.ZoomView_defaultColor, graph
-                .getDefaultColor()));
 
         paint.setTextAlign(Paint.Align.CENTER);
         paint.setTextSize(20f);
