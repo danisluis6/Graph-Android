@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v4.content.ContextCompat;
+import android.view.MenuItem;
 import android.view.SurfaceHolder;
 
 import org.giwi.networkgraph.R;
@@ -63,13 +64,8 @@ public class HomeActivity extends BaseActivity implements HomeView {
     @Override
     protected void initViews() {
         Node v1 = new SimpleNode("1");
-        Node v2 = new SimpleNode("24");
         Vertex vertex1 = new Vertex(v1, ContextCompat.getDrawable(mContext, R.drawable.avatar));
-        Vertex vertex2 = new Vertex(v2, ContextCompat.getDrawable(mContext, R.drawable.avatar));
         mNetworkGraph.getVertex().add(vertex1);
-        mNetworkGraph.getVertex().add(vertex2);
-
-        mNetworkGraph.addEdge(new SimpleEdge(v1, v2, "12"));
 
         init(mNetworkGraph, Utils.getScreenHeight(this), Utils.getScreenWidth(this));
     }
