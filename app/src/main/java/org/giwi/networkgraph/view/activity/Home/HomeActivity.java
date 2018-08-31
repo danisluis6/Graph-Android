@@ -99,14 +99,14 @@ public class HomeActivity extends BaseActivity implements HomeView {
     private void drawGraph(final Canvas canvas, final NetworkGraph graph, double height, double width) {
         mStrokePaint.setColor(ZoomView.getAttributes().getColor(R.styleable.ZoomView_nodeBgColor, graph.getNodeBgColor()));
 
-        float x1 = (float) (width / 2);
-        float y1 = 140;
-        float x2 = (float) (width / 2);
-        float y2 = 200;
-        canvas.drawLine(x1, y1, x2, y2, mLinePaint);
-        canvas.drawLine((float) (width * 0.25), 200, (float) (width * 0.75f), 200, mLinePaint);
-        canvas.drawLine((float) (width * 0.25), 200, (float) (width * 0.25f), 260, mLinePaint);
-        canvas.drawLine((float) (width * 0.75), 200, (float) (width * 0.75f), 260, mLinePaint);
+//        float x1 = (float) (width / 2);
+//        float y1 = 140;
+//        float x2 = (float) (width / 2);
+//        float y2 = 200;
+//        canvas.drawLine(x1, y1, x2, y2, mLinePaint);
+//        canvas.drawLine((float) (width * 0.25), 200, (float) (width * 0.75f), 200, mLinePaint);
+//        canvas.drawLine((float) (width * 0.25), 200, (float) (width * 0.25f), 260, mLinePaint);
+//        canvas.drawLine((float) (width * 0.75), 200, (float) (width * 0.75f), 260, mLinePaint);
 
         /*
          * Vertex 1
