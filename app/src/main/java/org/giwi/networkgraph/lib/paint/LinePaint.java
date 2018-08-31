@@ -16,6 +16,6 @@ public class LinePaint extends Paint {
         Paint linePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         linePaint.setColor(Color.BLACK);
         linePaint.setStyle(Paint.Style.STROKE);
-        linePaint.setStrokeWidth(2);
+        linePaint.setStrokeWidth(4);
     }
 }

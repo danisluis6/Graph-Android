@@ -23,8 +23,8 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/4.1/taskHistory/taskHistory.bin" afterPath="$PROJECT_DIR$/.gradle/4.1/taskHistory/taskHistory.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/4.1/taskHistory/taskHistory.lock" afterPath="$PROJECT_DIR$/.gradle/4.1/taskHistory/taskHistory.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/org/giwi/networkgraph/lib/paint/LinePaint.java" afterPath="$PROJECT_DIR$/app/src/main/java/org/giwi/networkgraph/lib/paint/LinePaint.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/org/giwi/networkgraph/view/activity/Home/HomeActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/org/giwi/networkgraph/view/activity/Home/HomeActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -51,12 +51,24 @@
       <file leaf-file-name="HomeActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/org/giwi/networkgraph/view/activity/Home/HomeActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="759">
-              <caret line="125" column="5" lean-forward="false" selection-start-line="125" selection-start-column="5" selection-end-line="125" selection-end-column="5" />
+            <state relative-caret-position="504">
+              <caret line="102" column="70" lean-forward="false" selection-start-line="102" selection-start-column="70" selection-end-line="102" selection-end-column="70" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1712#1713#0" expanded="true" />
-                <element signature="e#1757#1758#0" expanded="true" />
+                <element signature="e#1626#1627#0" expanded="true" />
+                <element signature="e#1671#1672#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LinePaint.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/org/giwi/networkgraph/lib/paint/LinePaint.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="18" column="34" lean-forward="false" selection-start-line="18" selection-start-column="34" selection-end-line="18" selection-end-column="34" />
+              <folding>
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -2073,13 +2085,13 @@
         <option value="$PROJECT_DIR$/app/src/main/java/org/giwi/networkgraph/lib/graph/ZoomView.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/giwi/networkgraph/di/component/AppComponent.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/giwi/networkgraph/lib/paint/StrokePaint.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/org/giwi/networkgraph/lib/paint/LinePaint.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/giwi/networkgraph/di/module/CustomPaint.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/giwi/networkgraph/di/module/PaintModule.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/giwi/networkgraph/lib/paint/CircelBitmap.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/giwi/networkgraph/lib/paint/CircleBitmap.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/giwi/networkgraph/app/Application.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/org/giwi/networkgraph/lib/paint/LinePaint.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/org/giwi/networkgraph/view/activity/Home/HomeActivity.java" />
       </list>
     </option>
@@ -2191,7 +2203,7 @@
     <property name="last_opened_file_path" value="$USER_HOME$/Desktop/android-network-graph-master" />
     <property name="android.project.structure.last.selected" value="lorence" />
     <property name="android.project.structure.proportion" value="0.15" />
-    <property name="SearchEverywhereHistoryKey" value="strings&#9;FILE&#9;file:///home/lorence/Documents/Senior/Graph-Android/app/src/main/res/values/strings.xml&#10;string&#9;FILE&#9;file:///home/lorence/Documents/Senior/Graph-Android/app/src/main/res/values/strings.xml&#10;ZoomView&#9;FILE&#9;file:///home/lorence/Documents/Senior/Graph-Android/app/src/main/java/org/giwi/networkgraph/lib/graph/ZoomView.java&#10;style&#9;FILE&#9;file:///home/lorence/Documents/Senior/Graph-Android/app/src/main/res/values/styles.xml&#10;Zoom&#9;FILE&#9;file:///home/lorence/Documents/Senior/Graph-Android/app/src/main/java/org/giwi/networkgraph/lib/graph/ZoomView.java&#10;Z&#9;FILE&#9;file:///home/lorence/Documents/Senior/Graph-Android/app/src/main/java/org/giwi/networkgraph/lib/graph/ZoomView.java&#10;colors.xm&#9;FILE&#9;file:///home/lorence/Android/Sdk/platforms/android-27/data/res/values/colors.xml&#10;z&#9;FILE&#9;file:///home/lorence/Documents/Senior/Graph-Android/app/src/main/java/org/giwi/networkgraph/lib/graph/ZoomView.java&#10;HomeA&#9;FILE&#9;file:///home/lorence/Documents/Senior/Graph-Android/app/src/main/java/org/giwi/networkgraph/view/activity/Home/HomeActivity.java&#10;MainAc&#9;FILE&#9;file:///home/lorence/Documents/Senior/Graph-Android/app/src/main/java/org/giwi/networkgraph/MainActivity.java&#10;Mai&#9;FILE&#9;file:///home/lorence/Documents/Senior/Graph-Android/app/src/main/res/layout/activity_main.xml&#10;Simple&#9;FILE&#9;jar:///home/lorence/Documents/Senior/Graph-Android/app/libs/Graphs.jar!/src/net/xqhs/graphs/graph/SimpleGraph.java&#10;SimpleGraph&#9;FILE&#9;jar:///home/lorence/Documents/Senior/Graph-Android/app/libs/Graphs.jar!/src/net/xqhs/graphs/graph/SimpleGraph.java&#10;Graph&#9;FILE&#9;jar:///home/lorence/Documents/Senior/Graph-Android/app/libs/Graphs.jar!/src/net/xqhs/graphs/graph/Graph.java" />
+    <property name="SearchEverywhereHistoryKey" value="LinePain&#9;FILE&#9;file:///home/lorence/Documents/Senior/Graph-Android/app/src/main/java/org/giwi/networkgraph/lib/paint/LinePaint.java&#10;strings&#9;FILE&#9;file:///home/lorence/Documents/Senior/Graph-Android/app/src/main/res/values/strings.xml&#10;string&#9;FILE&#9;file:///home/lorence/Documents/Senior/Graph-Android/app/src/main/res/values/strings.xml&#10;ZoomView&#9;FILE&#9;file:///home/lorence/Documents/Senior/Graph-Android/app/src/main/java/org/giwi/networkgraph/lib/graph/ZoomView.java&#10;style&#9;FILE&#9;file:///home/lorence/Documents/Senior/Graph-Android/app/src/main/res/values/styles.xml&#10;Zoom&#9;FILE&#9;file:///home/lorence/Documents/Senior/Graph-Android/app/src/main/java/org/giwi/networkgraph/lib/graph/ZoomView.java&#10;Z&#9;FILE&#9;file:///home/lorence/Documents/Senior/Graph-Android/app/src/main/java/org/giwi/networkgraph/lib/graph/ZoomView.java&#10;colors.xm&#9;FILE&#9;file:///home/lorence/Android/Sdk/platforms/android-27/data/res/values/colors.xml&#10;z&#9;FILE&#9;file:///home/lorence/Documents/Senior/Graph-Android/app/src/main/java/org/giwi/networkgraph/lib/graph/ZoomView.java&#10;HomeA&#9;FILE&#9;file:///home/lorence/Documents/Senior/Graph-Android/app/src/main/java/org/giwi/networkgraph/view/activity/Home/HomeActivity.java&#10;MainAc&#9;FILE&#9;file:///home/lorence/Documents/Senior/Graph-Android/app/src/main/java/org/giwi/networkgraph/MainActivity.java&#10;Mai&#9;FILE&#9;file:///home/lorence/Documents/Senior/Graph-Android/app/src/main/res/layout/activity_main.xml&#10;Simple&#9;FILE&#9;jar:///home/lorence/Documents/Senior/Graph-Android/app/libs/Graphs.jar!/src/net/xqhs/graphs/graph/SimpleGraph.java&#10;SimpleGraph&#9;FILE&#9;jar:///home/lorence/Documents/Senior/Graph-Android/app/libs/Graphs.jar!/src/net/xqhs/graphs/graph/SimpleGraph.java&#10;Graph&#9;FILE&#9;jar:///home/lorence/Documents/Senior/Graph-Android/app/libs/Graphs.jar!/src/net/xqhs/graphs/graph/Graph.java" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="DEBUGGABLE_DEVICE" value="emulator-5554" />
     <property name="DEBUGGABLE_PROCESS" value="org.giwi.android.networkgraph" />
@@ -2294,7 +2306,7 @@
       <option name="ACTIVITY_CLASS" value="" />
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1535704080689" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1535704691959" />
       </method>
     </configuration>
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests">
@@ -2342,7 +2354,7 @@
       </Profilers>
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1535704080690" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1535704691959" />
       </method>
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -2525,7 +2537,7 @@
       <option name="ACTIVITY_CLASS" value="" />
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1535704080693" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1535704691960" />
       </method>
     </configuration>
     <list size="1">
@@ -2976,18 +2988,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/giwi/networkgraph/lib/paint/LinePaint.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="22" lean-forward="false" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#209#210#0" expanded="true" />
-            <element signature="e#231#232#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/org/giwi/networkgraph/app/Application.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="435">
@@ -3016,14 +3016,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/giwi/networkgraph/view/activity/Home/HomeActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/giwi/networkgraph/lib/paint/LinePaint.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="759">
-          <caret line="125" column="5" lean-forward="false" selection-start-line="125" selection-start-column="5" selection-end-line="125" selection-end-column="5" />
+        <state relative-caret-position="240">
+          <caret line="18" column="34" lean-forward="false" selection-start-line="18" selection-start-column="34" selection-end-line="18" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1712#1713#0" expanded="true" />
-            <element signature="e#1757#1758#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/org/giwi/networkgraph/view/activity/Home/HomeActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="102" column="70" lean-forward="false" selection-start-line="102" selection-start-column="70" selection-end-line="102" selection-end-column="70" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1626#1627#0" expanded="true" />
+            <element signature="e#1671#1672#0" expanded="true" />
           </folding>
         </state>
       </provider>
