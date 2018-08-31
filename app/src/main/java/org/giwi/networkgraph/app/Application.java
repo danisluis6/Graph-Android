@@ -7,6 +7,7 @@ import android.support.annotation.RequiresApi;
 import org.giwi.networkgraph.di.component.AppComponent;
 import org.giwi.networkgraph.di.component.DaggerAppComponent;
 import org.giwi.networkgraph.di.module.AppModule;
+import org.giwi.networkgraph.di.module.PaintModule;
 import org.giwi.networkgraph.di.module.NetworkModule;
 
 /**
@@ -40,6 +41,7 @@ public class Application extends android.app.Application {
     private void initAppComponent() {
         mApplicationComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this,mContext))
+                .paintModule(new PaintModule())
                 .networkModule(new NetworkModule())
                 .build();
     }

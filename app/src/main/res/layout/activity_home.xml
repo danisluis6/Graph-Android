@@ -13,7 +13,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         app:edgeColor="@android:color/holo_blue_light"
-        app:nodeBgColor="@android:color/holo_red_light"
+        app:nodeBgColor="#E91E63"
         app:nodeColor="@android:color/holo_blue_light" />
 
 </RelativeLayout>

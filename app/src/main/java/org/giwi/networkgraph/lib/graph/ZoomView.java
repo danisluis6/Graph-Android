@@ -2,35 +2,23 @@ package org.giwi.networkgraph.lib.graph;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.PixelFormat;
-import android.graphics.PointF;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
-import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 
 import org.giwi.networkgraph.R;
-import org.giwi.networkgraph.lib.beans.ArcUtils;
-import org.giwi.networkgraph.lib.beans.Dimension;
-import org.giwi.networkgraph.lib.beans.Point2D;
-import org.giwi.networkgraph.lib.beans.Vertex;
-import org.giwi.networkgraph.lib.graph.edge.Edge;
-import org.giwi.networkgraph.lib.graph.network.NetworkGraph;
-import org.giwi.networkgraph.lib.graph.view.FRLayout;
 
-public class ZoomView extends SurfaceView {
+public class ZoomView extends SurfaceView implements View.OnTouchListener {
 
-    private TypedArray attributes;
+    private static TypedArray attributes;
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+
+        return false;
+    }
 
     private enum Mode {
         NONE,
@@ -64,16 +52,24 @@ public class ZoomView extends SurfaceView {
 
     public ZoomView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        attributes = getContext().obtainStyledAttributes(attrs, R.styleable.ZoomView);
-        this.context  = context;
+        this.context = context;
+        setAttributes(getContext().obtainStyledAttributes(attrs, R.styleable.ZoomView));
         init();
     }
 
     public ZoomView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        attributes = getContext().obtainStyledAttributes(attrs, R.styleable.ZoomView);
         this.context = context;
+        setAttributes(getContext().obtainStyledAttributes(attrs, R.styleable.ZoomView));
         init();
+    }
+
+    public static void setAttributes(TypedArray attributes) {
+        ZoomView.attributes = attributes;
+    }
+
+    public static TypedArray getAttributes() {
+        return attributes;
     }
 
     private void init() {
@@ -131,8 +127,8 @@ public class ZoomView extends SurfaceView {
                 getParent().requestDisallowInterceptTouchEvent(true);
                 float maxDx = getWidth() * scale;
                 float maxDy = getHeight() * scale;
-                dx = Math.min(Math.max(dx, - maxDx), 0);
-                dy = Math.min(Math.max(dy, - maxDy), 0);
+                dx = Math.min(Math.max(dx, -maxDx), 0);
+                dy = Math.min(Math.max(dy, -maxDy), 0);
                 applyScaleAndTranslation();
             }
 
@@ -165,105 +161,4 @@ public class ZoomView extends SurfaceView {
         this.setTranslationX(dx);
         this.setTranslationY(dy);
     }
-
-    public void init(final NetworkGraph graph, final double height, final double width) {
-        setZOrderMediaOverlay(true);
-        getHolder().setFormat(PixelFormat.RGBA_8888);
-        getHolder().addCallback(new SurfaceHolder.Callback() {
-            @Override
-            public void surfaceCreated(SurfaceHolder holder) {
-                Canvas canvas = holder.lockCanvas(null);
-                canvas.drawARGB(255, 255, 254, 244); // Get it here: https://color.adobe.com/create/color-wheel
-                drawGraph(canvas, graph, height, width);
-                holder.unlockCanvasAndPost(canvas);
-            }
-
-            @Override
-            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-            }
-
-            @Override
-            public void surfaceDestroyed(SurfaceHolder holder) {
-            }
-        });
-    }
-
-    private void drawGraph(final Canvas canvas, final NetworkGraph graph, double height, double width) {
-        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        Paint whitePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setAntiAlias(true);
-
-        whitePaint.setColor(attributes.getColor(R.styleable.ZoomView_nodeBgColor, graph.getNodeBgColor()));
-        whitePaint.setStyle(Paint.Style.STROKE);
-        whitePaint.setStrokeWidth(4f);
-
-        Paint linePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        linePaint.setColor(Color.BLACK);
-        linePaint.setStyle(Paint.Style.STROKE);
-        linePaint.setStrokeWidth(2);
-
-        float x1 = (float) (width/2);
-        float y1 = 140;
-        float x2 = (float) (width/2);
-        float y2 = 200;
-        canvas.drawLine(x1, y1, x2, y2, linePaint);
-        canvas.drawLine((float) (width*0.25), 200, (float) (width*0.75f), 200, paint);
-        canvas.drawLine((float) (width*0.25), 200, (float) (width*0.25f), 260, paint);
-        canvas.drawLine((float) (width*0.75), 200, (float) (width*0.75f), 260, paint);
-
-
-        /*
-         * Vertex 1
-         */
-        double posX = width/2;
-        double posY = 70.0;
-        Vertex vertex1 = graph.getVertex().get(0);
-        canvas.drawCircle((float) posX, (float) posY, 72, whitePaint);
-        if (vertex1.getIcon() != null) {
-            Bitmap b = ((BitmapDrawable) vertex1.getIcon()).getBitmap();
-            Bitmap bitmap = b.copy(Bitmap.Config.ARGB_8888, true);
-            Bitmap roundBitmap = getCroppedBitmap(bitmap, 140);
-            canvas.drawBitmap(roundBitmap,
-                    (float) posX - 70f, (float) posY - 70f, null);
-        }
-
-        /*
-         * Vertex 2
-         */
-        posX = width*0.25 - 70;
-        posY = 180.0 + 70;
-        Vertex vertex2 = graph.getVertex().get(1);
-        canvas.drawCircle((float) posX + 72, (float) posY + 72, 72, whitePaint);
-        if (vertex2.getIcon() != null) {
-            Bitmap b = ((BitmapDrawable) vertex2.getIcon()).getBitmap();
-            Bitmap bitmap = b.copy(Bitmap.Config.ARGB_8888, true);
-            Bitmap roundBitmap = getCroppedBitmap(bitmap, 140);
-            canvas.drawBitmap(roundBitmap,
-                    (float) posX, (float) posY, null);
-        }
-    }
-
-    private Bitmap getCroppedBitmap(Bitmap bmp, int radius) {
-        Bitmap sbmp;
-        if (bmp.getWidth() != radius || bmp.getHeight() != radius) {
-            sbmp = Bitmap.createScaledBitmap(bmp, radius, radius, false);
-        } else {
-            sbmp = bmp;
-        }
-        Bitmap output = Bitmap.createBitmap(sbmp.getWidth(), sbmp.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(output);
-        final Paint paint = new Paint();
-        final Rect rect = new Rect(0, 0, sbmp.getWidth(), sbmp.getHeight());
-        paint.setColor(Color.BLACK);
-        paint.setAntiAlias(true);
-        paint.setFilterBitmap(true);
-        paint.setDither(true);
-        canvas.drawARGB(0, 0, 0, 0);
-        canvas.drawCircle(
-                sbmp.getWidth() / 2 + 0.1f, sbmp.getHeight() / 2 + 0.1f, sbmp.getWidth() / 2 + 0.1f, paint);
-        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(sbmp, rect, rect, paint);
-        return output;
-    }
-
 }

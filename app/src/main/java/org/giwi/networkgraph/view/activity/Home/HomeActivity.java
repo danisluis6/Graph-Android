@@ -1,7 +1,12 @@
 package org.giwi.networkgraph.view.activity.Home;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.PixelFormat;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v4.content.ContextCompat;
+import android.view.SurfaceHolder;
 
 import org.giwi.networkgraph.R;
 import org.giwi.networkgraph.app.Application;
@@ -12,6 +17,9 @@ import org.giwi.networkgraph.lib.graph.edge.SimpleEdge;
 import org.giwi.networkgraph.lib.graph.network.NetworkGraph;
 import org.giwi.networkgraph.lib.graph.node.Node;
 import org.giwi.networkgraph.lib.graph.node.SimpleNode;
+import org.giwi.networkgraph.lib.paint.CircleBitmap;
+import org.giwi.networkgraph.lib.paint.LinePaint;
+import org.giwi.networkgraph.lib.paint.StrokePaint;
 import org.giwi.networkgraph.utilities.Utils;
 import org.giwi.networkgraph.view.activity.BaseActivity;
 
@@ -30,6 +38,15 @@ public class HomeActivity extends BaseActivity implements HomeView {
     @Inject
     Context mContext;
 
+    @Inject
+    LinePaint mLinePaint;
+
+    @Inject
+    StrokePaint mStrokePaint;
+
+    @Inject
+    CircleBitmap mCircleBitmap;
+
     @Override
     public void distributedDaggerComponents() {
         Application.getInstance()
@@ -45,7 +62,6 @@ public class HomeActivity extends BaseActivity implements HomeView {
 
     @Override
     protected void initViews() {
-
         Node v1 = new SimpleNode("1");
         Node v2 = new SimpleNode("24");
         Vertex vertex1 = new Vertex(v1, ContextCompat.getDrawable(mContext, R.drawable.avatar));
@@ -55,6 +71,56 @@ public class HomeActivity extends BaseActivity implements HomeView {
 
         mNetworkGraph.addEdge(new SimpleEdge(v1, v2, "12"));
 
-        mZoomView.init(mNetworkGraph, Utils.getScreenHeight(this), Utils.getScreenWidth(this));
+        init(mNetworkGraph, Utils.getScreenHeight(this), Utils.getScreenWidth(this));
+    }
+
+    public void init(final NetworkGraph graph, final double height, final double width) {
+        mZoomView.setZOrderMediaOverlay(true);
+        mZoomView.getHolder().setFormat(PixelFormat.RGBA_8888);
+        mZoomView.getHolder().addCallback(new SurfaceHolder.Callback() {
+            @Override
+            public void surfaceCreated(SurfaceHolder holder) {
+                Canvas canvas = holder.lockCanvas(null);
+                canvas.drawARGB(255, 255, 254, 244); // Get it here: https://color.adobe.com/create/color-wheel
+                drawGraph(canvas, graph, height, width);
+                holder.unlockCanvasAndPost(canvas);
+            }
+
+            @Override
+            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+            }
+
+            @Override
+            public void surfaceDestroyed(SurfaceHolder holder) {
+            }
+        });
+    }
+
+    private void drawGraph(final Canvas canvas, final NetworkGraph graph, double height, double width) {
+        mStrokePaint.setColor(ZoomView.getAttributes().getColor(R.styleable.ZoomView_nodeBgColor, graph.getNodeBgColor()));
+
+        float x1 = (float) (width / 2);
+        float y1 = 140;
+        float x2 = (float) (width / 2);
+        float y2 = 200;
+        canvas.drawLine(x1, y1, x2, y2, mLinePaint);
+        canvas.drawLine((float) (width * 0.25), 200, (float) (width * 0.75f), 200, mLinePaint);
+        canvas.drawLine((float) (width * 0.25), 200, (float) (width * 0.25f), 260, mLinePaint);
+        canvas.drawLine((float) (width * 0.75), 200, (float) (width * 0.75f), 260, mLinePaint);
+
+        /*
+         * Vertex 1
+         */
+        double posX = width / 2;
+        double posY = height / 2 - 80;
+        Vertex vertex1 = graph.getVertex().get(0);
+        canvas.drawCircle((float) posX, (float) posY, 72, mStrokePaint);
+        if (vertex1.getIcon() != null) {
+            Bitmap b = ((BitmapDrawable) vertex1.getIcon()).getBitmap();
+            Bitmap bitmap = b.copy(Bitmap.Config.ARGB_8888, true);
+            Bitmap roundBitmap = mCircleBitmap.getCircleBitmap(bitmap, 140);
+            canvas.drawBitmap(roundBitmap,
+                    (float) posX - 70f, (float) posY - 70f, null);
+        }
     }
 }

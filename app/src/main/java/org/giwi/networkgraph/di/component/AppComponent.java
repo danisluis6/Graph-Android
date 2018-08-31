@@ -1,6 +1,7 @@
 package org.giwi.networkgraph.di.component;
 
 import org.giwi.networkgraph.di.module.AppModule;
+import org.giwi.networkgraph.di.module.PaintModule;
 import org.giwi.networkgraph.di.module.HomeModule;
 import org.giwi.networkgraph.di.module.NetworkModule;
 
@@ -18,7 +19,7 @@ import dagger.Component;
 @Singleton
 @Component(
         modules = {
-                AppModule.class, NetworkModule.class
+                AppModule.class, PaintModule.class, NetworkModule.class
         }
 )
 public interface AppComponent {
