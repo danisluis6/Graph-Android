@@ -57,22 +57,4 @@ public class HomeActivity extends BaseActivity implements HomeView {
 
         mZoomView.init(mNetworkGraph, Utils.getScreenHeight(this), Utils.getScreenWidth(this));
     }
-
-//    @Override
-//    public void surfaceCreated(SurfaceHolder holder) {
-//        Canvas canvas = holder.lockCanvas(null);
-//        canvas.drawARGB(0,255,255,255);
-//        mZoomView.drawGraph(canvas, mNetworkGraph);
-//        holder.unlockCanvasAndPost(canvas);
-//    }
-//
-//    @Override
-//    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-//
-//    }
-//
-//    @Override
-//    public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-//
-//    }
 }

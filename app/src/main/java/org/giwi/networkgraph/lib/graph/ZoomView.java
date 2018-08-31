@@ -192,7 +192,6 @@ public class ZoomView extends SurfaceView {
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         Paint whitePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setAntiAlias(true);
-        FRLayout layout = new FRLayout(graph, new Dimension(getWidth(), getHeight()));
 
         whitePaint.setColor(attributes.getColor(R.styleable.ZoomView_nodeBgColor, graph.getNodeBgColor()));
         whitePaint.setStyle(Paint.Style.STROKE);
@@ -206,11 +205,11 @@ public class ZoomView extends SurfaceView {
         float x1 = (float) (width/2);
         float y1 = 140;
         float x2 = (float) (width/2);
-        float y2 = 220;
+        float y2 = 200;
         canvas.drawLine(x1, y1, x2, y2, linePaint);
-        canvas.drawLine((float) (width*0.25), 220, (float) (width*0.75f), 220, paint);
-        canvas.drawLine((float) (width*0.25), 220, (float) (width*0.25f), 300, paint);
-        canvas.drawLine((float) (width*0.75), 220, (float) (width*0.75f), 300, paint);
+        canvas.drawLine((float) (width*0.25), 200, (float) (width*0.75f), 200, paint);
+        canvas.drawLine((float) (width*0.25), 200, (float) (width*0.25f), 260, paint);
+        canvas.drawLine((float) (width*0.75), 200, (float) (width*0.75f), 260, paint);
 
 
         /*
@@ -219,9 +218,6 @@ public class ZoomView extends SurfaceView {
         double posX = width/2;
         double posY = 70.0;
         Vertex vertex1 = graph.getVertex().get(0);
-        Point2D position = layout.transform(vertex1.getNode());
-//        double posX = position.getX();
-//        double posY = position.getY();
         canvas.drawCircle((float) posX, (float) posY, 72, whitePaint);
         if (vertex1.getIcon() != null) {
             Bitmap b = ((BitmapDrawable) vertex1.getIcon()).getBitmap();
@@ -234,8 +230,8 @@ public class ZoomView extends SurfaceView {
         /*
          * Vertex 2
          */
-        posX = width*0.25 - 72;
-        posY = 220.0 + 72;
+        posX = width*0.25 - 70;
+        posY = 180.0 + 70;
         Vertex vertex2 = graph.getVertex().get(1);
         canvas.drawCircle((float) posX + 72, (float) posY + 72, 72, whitePaint);
         if (vertex2.getIcon() != null) {
