@@ -97,11 +97,11 @@ public class HomeActivity extends BaseActivity implements HomeView {
         float y1 = (float) (height/2);
 
         float x2 = (float) (width / 2);
-        float y2 = (float) (height/2 + 60);
+        float y2 = (float) (height/2 + 40);
         canvas.drawLine(x1, y1, x2, y2, mLinePaint);
-        canvas.drawLine((float) (width * 0.25), (float) (height/2 + 60), (float) (width * 0.75f), (float) (height/2 + 60), mLinePaint);
-        canvas.drawLine((float) (width * 0.25), (float) (height/2 + 60), (float) (width * 0.25f), (float) (height/2)+120, mLinePaint);
-        canvas.drawLine((float) (width * 0.75), (float) (height/2 + 60), (float) (width * 0.75f), (float) (height/2)+120, mLinePaint);
+        canvas.drawLine((float) (width * 0.25), (float) (height/2 + 40), (float) (width * 0.75f), (float) (height/2 + 40), mLinePaint);
+        canvas.drawLine((float) (width * 0.25), (float) (height/2 + 40), (float) (width * 0.25f), (float) (height/2) + 80, mLinePaint);
+        canvas.drawLine((float) (width * 0.75), (float) (height/2 + 40), (float) (width * 0.75f), (float) (height/2) + 80, mLinePaint);
 
         /*
          * Vertex 1
